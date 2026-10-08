@@ -56,3 +56,31 @@ function checkReservation(reservation) {
     return "Reservation pending";
 
 }
+
+
+function createAccount(user) {
+    let message = "";
+
+    if (user.name === "" || user.email === "") {
+        message = "Missing information";
+    } else if (!user.email.includes("@")) {
+        message = "Invalid email";
+    } else if (user.password.length < 8) {
+        message = "Password too short";
+    } else {
+        if (user.age < 18) {
+            message = "User must be at least 18 years old";
+        } else {
+            user.status = "active";
+            user.createdAt = new Date();
+            message = "Account created successfully";
+
+            if (user.isPremium) {
+                user.subscription = "premium";
+                message += " - Premium account";
+            }
+        }
+    }
+
+    return message;
+}
