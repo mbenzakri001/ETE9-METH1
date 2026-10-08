@@ -1,18 +1,13 @@
 function getUserInfo(user) {
-    let result = "";
-
-    if (user.isAdmin === true) {
+    if (user.isAdmin) {
         result = "Admin: " + user.name;
-    } else {
-        if (user.isActive === true) {
-            result = "User: " + user.name;
-        } else {
-            result = "Inactive user: " + user.name;
-        }
     }
-
-    return result;
+    if (!user.isActive) {
+        result = "Inactive user: " + user.name;
+    }
+    return "User: " + user.name;
 }
+
 
 function calculateTotal(items) {
     let total = 0;
