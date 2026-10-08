@@ -39,23 +39,20 @@ function calculateTotal(items) {
 
 
 function checkReservation(reservation) {
-    let message = "";
 
     if (reservation.isCancelled) {
-        message = "Reservation cancelled";
-    } else {
-        if (reservation.guests <= 0) {
-            message = "Invalid number of guests";
-        } else if (reservation.guests > 10) {
-            message = "Group reservation";
-        } else {
-            if (reservation.isConfirmed) {
-                message = "Reservation confirmed";
-            } else {
-                message = "Reservation pending";
-            }
-        }
+        return "Reservation cancelled";
+    } 
+    
+    if (reservation.guests <= 0) {
+       return "Invalid number of guests";
+    } 
+    if (reservation.guests > 10) {
+       return "Group reservation";
+    } 
+    if (reservation.isConfirmed) {
+        return "Reservation confirmed";
     }
+    return "Reservation pending";
 
-    return message;
 }
