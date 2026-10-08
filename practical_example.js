@@ -22,3 +22,25 @@ function calculateTotal(items) {
     }
     return ApplyDiscount(total);
 }
+
+function getUserStatus(user) {
+    let message = "";
+
+    if (user.isAdmin) {
+        message = "Admin";
+    } else if (user.isActive) {
+        if (user.age >= 18) {
+            message = "Active adult user";
+        } else {
+            message = "Active minor user";
+        }
+    } else {
+        message = "Inactive user";
+    }
+
+    if (user.isBanned) {
+        message += " - Banned";
+    }
+
+    return message;
+}
