@@ -69,25 +69,25 @@ function isUserMinor(user){
 
 function ValidateUser(user) {
     if (!user.name || !user.email) {
-        return "Missing information";
+        return [false, "Missing information"];
     } 
     if (!user.email.includes("@")) {
-        return "Invalid email";
+        return [false, "Invalid email"];
     } 
     if (user.password.length < PASSWORD_MIN_LEN) {
-        return "Password too short";
+        return [false, "Password too short"];
     }
     if (isUserMinor(user)) {
-        return "User must be at least 18 years old";
+        return [false, "User must be at least 18 years old"];
     }
-    return null;
+    return [true,""];
 }
 
 function createAccount(user) {
 
-    const ValidationError = ValidateUser(user);
-    if (ValidateUser(user)){
-        return ValidationError;
+    const [isOk, errorMessage] = ValidateUser(user);
+    if (!isOk){
+        return errorMessage;
     }
     
     user.status = "active";
