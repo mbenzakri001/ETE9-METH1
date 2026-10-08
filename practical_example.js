@@ -25,8 +25,8 @@ function ApplyDiscount(total){
     return total - total*DISCOUNT_RATE;
 }
 
-function isEligibleForDiscount(total){
-    return total > MAX_PRICE ? ApplyDiscount(total) : total;
+function EligibleForDiscount(total){
+    return total > MAX_PRICE;
 }
 
 function calculateTotal(items) {
@@ -34,7 +34,10 @@ function calculateTotal(items) {
     for (const item in items) {
         total += item.price * item.quantity;
     }
-    return isEligibleForDiscount(total);
+    if (EligibleForDiscount(total)) {
+        return ApplyDiscount(total);
+    }
+    return total;
 }
 
 
@@ -58,29 +61,34 @@ function checkReservation(reservation) {
 }
 
 
+const PASSWORD_MIN_LEN = 8;
+
+function isUserMinor(user){
+    return user.age < 18;
+}
+
 function createAccount(user) {
-    let message = "";
-
-    if (user.name === "" || user.email === "") {
-        message = "Missing information";
-    } else if (!user.email.includes("@")) {
-        message = "Invalid email";
-    } else if (user.password.length < 8) {
-        message = "Password too short";
-    } else {
-        if (user.age < 18) {
-            message = "User must be at least 18 years old";
-        } else {
-            user.status = "active";
-            user.createdAt = new Date();
-            message = "Account created successfully";
-
-            if (user.isPremium) {
-                user.subscription = "premium";
-                message += " - Premium account";
-            }
-        }
+    if (!user.name || !user.email) {
+        return "Missing information";
+    } 
+    if (!user.email.includes("@")) {
+        return "Invalid email";
+    } 
+    if (user.password.length < PASSWORD_MIN_LEN) {
+        return "Password too short";
     }
+    if (isUserMinor(user)) {
+        return "User must be at least 18 years old";
+    }
+    
+    user.status = "active";
+    user.createdAt = new Date();    
+    
+    if (user.isPremium) {
+            user.subscription = "premium";
+            return "Account created successfully - Premium subscription OK"
+        }        
 
-    return message;
+    return "Account created successfully";
+
 }
