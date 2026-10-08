@@ -67,7 +67,7 @@ function isUserMinor(user){
     return user.age < 18;
 }
 
-function createAccount(user) {
+function ValidateUser(user) {
     if (!user.name || !user.email) {
         return "Missing information";
     } 
@@ -80,10 +80,19 @@ function createAccount(user) {
     if (isUserMinor(user)) {
         return "User must be at least 18 years old";
     }
+    return null;
+}
+
+function createAccount(user) {
+
+    const ValidationError = ValidateUser(user);
+    if (ValidateUser(user)){
+        return ValidationError;
+    }
     
     user.status = "active";
     user.createdAt = new Date();    
-    
+
     if (user.isPremium) {
             user.subscription = "premium";
             return "Account created successfully - Premium subscription OK"
