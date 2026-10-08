@@ -8,17 +8,17 @@ function getUserInfo(user) {
     return "User: " + user.name;
 }
 
+const max_pice = 100;
+const discount_rate = 0.20;
+
+function ApplyDiscount(item_price){
+    return item_price*discount_rate
+}
 
 function calculateTotal(items) {
     let total = 0;
-
     for (let i = 0; i < items.length; i++) {
         total = total + items[i].price * items[i].quantity;
     }
-
-    if (total > 100) {
-        total = total - total * 0.10;
-    }
-
-    return total;
+    return ApplyDiscount(total);
 }
