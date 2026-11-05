@@ -1,18 +1,16 @@
-import { test } from "node:test";
-import assert from "node:assert/strict";
-import { logger } from "./logger.js";
-import { fileSystem } from "./file_writer.js";
+import assert from 'node:assert/strict';
+import { test, mock } from 'node:test';
+import { fileWriter } from './fileWriter.mjs';
+import { logger } from './logger.mjs';
 
-test("logger transmet le message au file writer avec un timestamp", () => {
-  let messageRecu;
-  const ancienneFonction = fileSystem.writeToFile;
+test("info is written in log file", () => {
+    mock.method(fileWriter, "appendTo", () => { });
 
-  fileSystem.writeToFile = (message) => { // on remplace la fonction writeToFile par une fonction qui stocke le message reçu
-    messageRecu = message;
-  };
+    logger.info("ceci est une info");
 
-  logger.info("Message de test avec timestamp");
-  fileSystem.writeToFile = ancienneFonction; // on remet la fonction writeToFile originale
+    assert.equal(fileWriter.appendTo.mock.calls.length, 1);
 
-  assert.ok(messageRecu.startsWith(new Date().toISOString().slice(0, 10))); // on vérifie que le message commence par le timestamp
-})
+    const [fileName, message] = fileWriter.appendTo.mock.calls[0].arguments
+    assert.equal(fileName, "log.txt");
+    assert.equal(message, `${new Date().toISOString()} : ceci est une info\n`);
+});
