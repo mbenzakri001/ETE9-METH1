@@ -1,10 +1,8 @@
-import * as fs from "fs";
+import { fileSystem } from "./file_writer.js";
 
-const fileName = "log.txt";
-
-const logger = { // object
-    info(content) {fs.appendFileSync(fileName, `${content}\n`, "utf8");}
-}
-
-logger.info("Hello World!");
-logger.info("This is a log message.");
+export const logger = {
+    info(content) {
+        console.log(content);
+        fileSystem.writeToFile(content);
+    }
+};
