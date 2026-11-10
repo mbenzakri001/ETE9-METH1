@@ -15,3 +15,5 @@ console.log("Write database:", ACCOUNT_LIST);
 console.log("Query database:", accountSummaryList);
 console.log("Account list:", accountQuery.getAccountList());
 console.log("Retrieved account:", accountQuery.getAccount(account.id));
+
+console.log("Compte depuis le cache :", accountQuery.getAccount(account.id));
