@@ -14,8 +14,10 @@ export const accountCommand = {
     return account;
   },
 
-  saveAccount(id, lastName, firstName) {
-    const account = updateAccount(id, lastName, firstName);
+  saveAccount(id, lastName, firstName) { 
+    // on peut ajouter ici la reconstitution de l'état de l'account à partir des events pour vérifier 
+    // si les données sont cohérentes avant de faire la mise à jour
+    const account = updateAccount(id, lastName, firstName); 
     accountCache[id] = {
       name: `${account.lastName} ${account.firstName}`,
     };
