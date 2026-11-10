@@ -1,7 +1,8 @@
 import { ACCOUNT_LIST } from "./database.mjs";
+import { accountSummaryList } from "./queryDatabase.mjs";
 
 export function retrieveAccountList() {
-  return ACCOUNT_LIST.map(({ id, lastName, firstName }) => ({
+  return accountSummaryList.map(({ id, lastName, firstName }) => ({
     id,
     lastName,
     firstName,
